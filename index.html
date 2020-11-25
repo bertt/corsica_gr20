@@ -52,11 +52,15 @@
         window.Procedural = Procedural;
 
 
-        fetch("small.geojson")
+        fetch("stage_1.json")
            .then(response => response.json())
            .then(json => Procedural.addOverlay(json));
 
-          var position = {
+           fetch("stops.json")
+           .then(response => response.json())
+           .then(json => Procedural.addOverlay(json));
+
+           var position = {
             coords: {
                 latitude: latitude,
                 longitude: longitude,
