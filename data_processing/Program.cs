@@ -60,6 +60,7 @@ namespace data_processing
             var gpxText = File.ReadAllText(file);
             var gpx = NetTopologySuite.IO.GpxFile.Parse(gpxText, null);
             var waypoints = gpx.Tracks[0].Segments[0].Waypoints;
+            
 
             if(isFirst){
                 var waypoint = waypoints.First();
@@ -71,10 +72,19 @@ namespace data_processing
 
             var fc = new FeatureCollection();
 
-            var positions = new List<IPosition>();
+            var points = new List<Point>();
             
             foreach(var waypoint in waypoints){
-                var pos = GetPosition(waypoint);
+                var point = GetPoint(waypoint);
+                points.Add(point);
+            }
+
+            var pointssimplified = Simplify3D.SimplifyArray(points.ToArray(),0.0003,true);
+
+            var positions = new List<IPosition>();
+            
+            foreach(var point in pointssimplified){
+                var pos = GetPosition(point);
                 positions.Add(pos);
             }
             var linestring = new LineString(positions);
@@ -91,7 +101,7 @@ namespace data_processing
             var fc = new FeatureCollection();
 
             foreach(var stop in stopPoints){
-                var stopFeature = new Feature(new Point(GetPosition(stop))); 
+                var stopFeature = new Feature(new GeoJSON.Net.Geometry.Point(GetPosition(stop))); 
                 stopFeature.Properties.Add("name", stop.Name);
                 stopFeature.Properties.Add("fontsize", 20);
                 stopFeature.Properties.Add("background", "black");
@@ -104,7 +114,16 @@ namespace data_processing
         
 
         private static Position GetPosition(GpxWaypoint waypoint){
-            return new Position(waypoint.Latitude, waypoint.Longitude);
+            return new Position(waypoint.Latitude, waypoint.Longitude, waypoint.ElevationInMeters);
         }
+
+        private static Position GetPosition(Point p){
+            return new Position(p.Y, p.X, p.Z);
+        }
+
+        private static Point GetPoint(GpxWaypoint waypoint){
+            return new Point(){X=waypoint.Longitude, Y=waypoint.Latitude, Z=((double)waypoint.ElevationInMeters)};
+        }
+
     }
 }
