@@ -1,9 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "track_points",
-"features": [
-{ "type": "Feature", "id":"0", "properties": {  "color": "white","padding": 10,"name": "start","background": "black" }, "geometry": { "type": "Point", "coordinates": [ 8.855443, 42.507796 ] } },
-{ "type": "Feature", "id":"1", "properties": {  "color": "white","padding": 10,"name": "start1","background": "black"}, "geometry": { "type": "Point", "coordinates": [ 8.855469, 42.507772 ] } }
-]
-}
-
