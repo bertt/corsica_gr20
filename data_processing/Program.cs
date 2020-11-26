@@ -18,11 +18,13 @@ namespace data_processing
             var input_files = Directory.GetFiles("../data/input");
             var stops = new string[] {"Calenzana", "Refuge Orto di u Piobbu"};
             var stopPoints = new List<GpxWaypoint>();
-            // bool isFirst = true;
             var stop_id = 0;
+            var random = new Random();
+
             foreach(var file in input_files){
                 var stagestops = new string[2]{stops[stop_id], stops[stop_id+1]};
-                stopPoints.AddRange(WriteStage(file, stop_id==0, stops, "#0000ff"));
+                var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
+                stopPoints.AddRange(WriteStage(file, stop_id==0, stops, randomColor));
                 if(stop_id==0) {
                     stop_id = 1;
                 }
