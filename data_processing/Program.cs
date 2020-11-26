@@ -24,7 +24,7 @@ namespace data_processing
             foreach(var file in input_files){
                 var stagestops = new string[2]{stops[stop_id], stops[stop_id+1] };
                 var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
-                stopPoints.AddRange(WriteStage(file, stop_id==0, stops, randomColor));
+                stopPoints.AddRange(WriteStage(file, stop_id==0, stagestops, randomColor));
                 stop_id++;
             }
 
