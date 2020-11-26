@@ -52,7 +52,7 @@
         window.Procedural = Procedural;
 
 
-        fetch("/data/stage_1.json")
+        fetch("./data/stage_1.json")
            .then(response => response.json())
            .then(json => Procedural.addOverlay(json));
 
