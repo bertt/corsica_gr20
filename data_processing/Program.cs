@@ -16,18 +16,15 @@ namespace data_processing
         {
             // var stage = 1;
             var input_files = Directory.GetFiles("../data/input");
-            var stops = new string[] {"Calenzana", "Refuge Orto di u Piobbu"};
+            var stops = new string[] {"Calenzana", "Refuge Orto di u Piobbu", "Refuge Carrozu"};
             var stopPoints = new List<GpxWaypoint>();
             var stop_id = 0;
             var random = new Random();
 
             foreach(var file in input_files){
-                var stagestops = new string[2]{stops[stop_id], stops[stop_id+1]};
+                var stagestops = new string[2]{stops[stop_id], stops[stop_id+1] };
                 var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
                 stopPoints.AddRange(WriteStage(file, stop_id==0, stops, randomColor));
-                if(stop_id==0) {
-                    stop_id = 1;
-                }
                 stop_id++;
             }
 

@@ -56,6 +56,10 @@
            .then(response => response.json())
            .then(json => Procedural.addOverlay(json));
 
+           fetch("./data/stage_2.json")
+           .then(response => response.json())
+           .then(json => Procedural.addOverlay(json));
+
            fetch("./data/stops.json")
            .then(response => response.json())
            .then(json => Procedural.addOverlay(json));
