@@ -52,17 +52,15 @@
         window.Procedural = Procedural;
 
 
-        fetch("./data/stage_1.json")
+        for(var i=1;i<=15;i++){
+          fetch("./data/stage_" + i + ".json")
            .then(response => response.json())
            .then(json => Procedural.addOverlay(json));
-
-           fetch("./data/stage_2.json")
-           .then(response => response.json())
-           .then(json => Procedural.addOverlay(json));
-
-           fetch("./data/stops.json")
-           .then(response => response.json())
-           .then(json => Procedural.addOverlay(json));
+        }
+        
+        fetch("./data/stops.json")
+        .then(response => response.json())
+        .then(json => Procedural.addOverlay(json));
 
            var position = {
             coords: {

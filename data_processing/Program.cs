@@ -8,23 +8,45 @@ using NetTopologySuite.IO;
 using Newtonsoft.Json;
 
 namespace data_processing
+
 {
+    public class InputFile {
+        public int Stage{get;set;}
+        public string FileName {get;set;}
+    }
+
+
     public class Program
     {
 
         static void Main(string[] args)
         {
-            // var stage = 1;
             var input_files = Directory.GetFiles("../data/input");
-            var stops = new string[] {"Calenzana", "Refuge Orto di u Piobbu", "Refuge Carrozu"};
+            var files = new List<InputFile>();
+            foreach(var input in input_files){
+                var stage = Int32.Parse(Path.GetFileNameWithoutExtension(input).Split('_')[1]);
+                var file = new InputFile(){FileName=input, Stage= stage};
+                files.Add(file);
+            }
+
+            var files1 = files.OrderBy(q => q.Stage).ToArray();
+            var stops = new string[] {
+                "Calenzana", "Refuge Orto di u Piobbu", "Refuge Carrozu",
+                "Refuge Haut Asco", " Auberge U Vallone", "Castel de Vergio",
+                "Refuge Manganu", "Refuge Petra Piana", "Onda",
+                "Vizzavona", "Refuge de Capanelle", "Refuge de Prati", 
+                "Refuge Usciolu", "Bergerie de Croce", "Col de Bavella",
+                "Conca"
+            };
             var stopPoints = new List<GpxWaypoint>();
             var stop_id = 0;
             var random = new Random();
 
-            foreach(var file in input_files){
+            foreach(var file in files1){
+                Console.Write(".");
                 var stagestops = new string[2]{stops[stop_id], stops[stop_id+1] };
                 var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
-                stopPoints.AddRange(WriteStage(file, stop_id==0, stagestops, randomColor));
+                stopPoints.AddRange(WriteStage(file.FileName, stop_id==0, stagestops, randomColor));
                 stop_id++;
             }
 
