@@ -103,8 +103,11 @@ namespace data_processing
             foreach(var stop in stopPoints){
                 var stopFeature = new Feature(new GeoJSON.Net.Geometry.Point(GetPosition(stop))); 
                 stopFeature.Properties.Add("name", stop.Name);
-                stopFeature.Properties.Add("fontsize", 20);
-                stopFeature.Properties.Add("background", "black");
+                stopFeature.Properties.Add("fontSize", 15);
+                stopFeature.Properties.Add("color", "black");
+                stopFeature.Properties.Add("background", "cornsilk");
+                stopFeature.Properties.Add("icon", "star");
+
                 fc.Features.Add(stopFeature);
             }
 
