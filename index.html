@@ -52,11 +52,16 @@
         window.Procedural = Procedural;
         Procedural.toggleUserLocationTracking();
 
-        fetch("./data/stops.json")
+       for(var i=1;i<=15;i++){
+          fetch("./data/stage_" + i + ".json")
+          .then(response => response.json())
+          .then(json => Procedural.addOverlay(json));
+       }
+        
+       fetch("./data/stops.json")
         .then(response => response.json())
         .then(
           json => {
-              Procedural.addOverlay(json);
               var anchorsDiv = document.getElementById('divAnchors');
               json.features.forEach( function ( feature ) {
                 var name = feature.properties.name;
@@ -70,16 +75,12 @@
                 };
                 anchorsDiv.appendChild(a);
                 anchorsDiv.appendChild(document.createElement('br'));
+
+                Procedural.addOverlay(json);
               });
           }
       );
 
-       for(var i=1;i<=15;i++){
-          fetch("./data/stage_" + i + ".json")
-          .then(response => response.json())
-          .then(json => Procedural.addOverlay(json));
-       }
-        
 
            var position = {
             coords: {
