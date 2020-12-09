@@ -9,10 +9,47 @@
 <style>
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+    #fly {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 40%;
+        height: 30px;
+        top:10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #ee8a65;
+    }
+
+    #anchors{
+        position: absolute; 
+        text-align:center;
+        height: 300px;
+        width:200px;
+        left:10px;
+        top:80px;
+        background-color:white;
+        opacity:0.5; 
+        border-radius: 25px;
+    }
 </style>
 </head>
 <body>
-<div id="map"></div>
+    <div id="map"></div>
+
+    <div id="fly">
+        <h2>
+          Corsica - GR20 - September 2018
+        </h2>
+      </div>
+    
+      <div id="anchors">
+      </div>
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmVydHQiLCJhIjoiY2tpaDVueXBtMGF2eTMwb2cwb2FwZHJuciJ9.NrAsk3I28Nhb9dZaCa6V7w';
     var map = new mapboxgl.Map({
@@ -35,6 +72,7 @@
         
         map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 3 });
         addStops();
+        addAnchors();
 
         for(var i=1;i<=15;i++){
                 addStage(i);
@@ -48,9 +86,40 @@
                 'sky-type': 'atmosphere',
                 'sky-atmosphere-sun': [0.0, 0.0],
                 'sky-atmosphere-sun-intensity': 15
-            }
+        }
         });
     });
+
+    function addAnchors(){
+        fetch("../data/stops.json")
+        .then(response => response.json())
+        .then(
+          json => {
+              var anchorsDiv = document.getElementById('anchors');
+              json.features.forEach( function ( feature ) {
+                var name = feature.properties.name;
+                var coords = feature.geometry.coordinates;
+                var a = document.createElement( 'a' );
+                a.text = name;
+                a.href = '#';
+                a.onclick  = function () {
+                    map.flyTo({
+                        center: [
+                        coords[0],
+                        coords[1]
+                        ],
+                        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                        });
+                };
+                anchorsDiv.appendChild(a);
+                anchorsDiv.appendChild(document.createElement('br'));
+
+                // Procedural.addOverlay(json);
+              });
+          }
+      );
+
+    }
 
     function addStops(){
         map.loadImage(
