@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>GR 20 Corsica</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiYmVydHQiLCJhIjoiY2tpaDVueXBtMGF2eTMwb2cwb2FwZHJuciJ9.NrAsk3I28Nhb9dZaCa6V7w';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        center: [9.133612364583069, 42.12867913918138], // starting position [lng, lat]  // 42.12867913918138, 9.133612364583069
+        zoom: 8, // starting 
+        pitch: 30,
+        bearing: 0,
+        style: 'mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y'
+    });
+
+
+    map.on('load', function() {
+        map.addSource('mapbox-dem', {
+            'type': 'raster-dem',
+            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            'tileSize': 512,
+            'maxzoom': 14
+        });
+        
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 3 });
+        addStops();
+
+        for(var i=1;i<=15;i++){
+                addStage(i);
+        }
+    });
+
+    function addStops(){
+        map.loadImage(
+        'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('custom-marker', image);
+
+            var url = '../data/stops.json';
+            map.addSource('stops', { type: 'geojson', data: url});
+
+            map.addLayer({
+            'id': 'stops',
+            'type': 'symbol',
+            'source': 'stops',
+            'layout': {
+                'icon-image': 'custom-marker',
+                'text-field': ['get', 'name'],
+                'text-font': [
+                'Open Sans Semibold',
+                'Arial Unicode MS Bold'
+                ],
+                'text-offset': [0, 1.25],
+                'text-anchor': 'top',
+            },
+            'paint': {
+                'text-color': 'rgb(255, 255, 255)',
+            }
+            });
+        });
+    }
+
+    function addStage(id){
+        var url = '../data/stage_' + id + '.json';
+        map.addSource('stage_'+ id , { type: 'geojson', data: url});
+
+        map.addLayer(
+        {
+            'id': 'stage_' + id,
+            'type': 'line',
+            'source': 'stage_' + id,
+            'layout': {
+            'line-cap': 'round',
+            'line-join': 'round'
+            },
+            'paint': {
+                'line-opacity': 0.6,
+                'line-color': 'rgb(255, 0, 0)',
+                'line-width': 8
+            }
+        },
+            'waterway-label'
+        );
+    }
+
+</script>
+ 
+</body>
+</html>
