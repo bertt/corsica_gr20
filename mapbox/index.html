@@ -65,12 +65,12 @@
     map.on('load', function() {
         map.addSource('mapbox-dem', {
             'type': 'raster-dem',
-            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-            'tileSize': 512,
+            'url': 'mapbox://bertt.1bbtn1fv',
+            'tileSize': 256,
             'maxzoom': 14
         });
         
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 3 });
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 0.1});
         addStops();
         addAnchors();
 
