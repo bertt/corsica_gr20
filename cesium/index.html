@@ -39,17 +39,32 @@
     viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.globe.enableLighting = true;
     viewer.scene.globe.terrainExaggeration = 1;
-    //var gpx = Cesium.GpxDataSource.load('gpx/stage_1.gpx',  {
-    //   clampToGround: true,
-    //});
-    // gpx = Cesium.GpxDataSource.load('gpx/stage_2.gpx');
-    //viewer.dataSources.add(gpx);
+    viewer.scene.globe.depthTestAgainstTerrain=true;
 
     var geojson = Cesium.GeoJsonDataSource.load('geojson/all.geojson',  {
        clampToGround: true,
     });
     viewer.dataSources.add(geojson);
 
+    var stops = Cesium.GeoJsonDataSource.load('geojson/stops.json',  {
+       clampToGround: true,
+       markerColor: Cesium.Color.DARKGREEN,
+    });
+
+    stops.then (function (dataSource) {
+      viewer.dataSources.add (dataSource);
+      var entities = dataSource["_entityCollection"]["_entities"]["_array"];
+      entities.forEach (entity => {
+        // Add (and poistion?) label
+        entity.label = new Cesium.LabelGraphics ({
+          text: entity['_properties']['name']._value,
+          //eyeOffset: new Cesium.Cartesian3 (0, 10, 0),
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          pixelOffset: new Cesium.Cartesian2(0.0, -40.0), // Show above ground?
+        });
+      })
+    });
 
     // zoom to texel...
     viewer.camera.setView({
