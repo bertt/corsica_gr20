@@ -22,7 +22,7 @@ Step 2] Process
 Commands to process the ASC files to terrain tiles:
 
 ```
-// convert files from asx to tif
+// convert files from asc to tif
 $ time find *.asc | parallel --bar 'gdalwarp -s_srs EPSG:2154 {} {=s:asc:tif:=}'
 
 // warp use epsg:5699 (is EPSG:2154 + EPSG:5721)
