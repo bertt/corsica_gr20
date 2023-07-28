@@ -26,9 +26,9 @@ Commands to process the ASC files to terrain tiles:
 $ time find *.asc | parallel --bar 'gdalwarp -s_srs EPSG:2154 {} {=s:asc:tif:=}'
 
 // warp use epsg:5699 (is EPSG:2154 + EPSG:5721)
-$ docker run -it -v $(pwd}:/data geodan/terrainwarp -c EPSG:5699 -m 1
+$ docker run -it -v $(pwd):/data geodan/terrainwarp -c EPSG:5699 -m 1
 
 // tile
-$ docker run -it -v $(pwd}:/data geodan/terraintiler
+$ docker run -it -v $(pwd):/data geodan/terraintiler
 ```
 
