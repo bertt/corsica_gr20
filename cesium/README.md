@@ -13,7 +13,7 @@ $ wget --no-check-certificate https://wxs.ign.fr/9u5z4x13jqu05fb3o9cux5e1/telech
 
 B Download:
 ```
-$wget --no-check-certificate https://wxs.ign.fr/9u5z4x13jqu05fb3o9cux5e1/telechargement/prepackage/RGEALTI-5M_PACK_CORSE_16-06-2021$RGEALTI_2-0_5M_ASC_LAMB93-IGN78C_D02B_2020-04-16/file/RGEALTI_2-0_5M_ASC_LAMB93-IGN78C_D02B_2020-04-16.7z
+$ wget --no-check-certificate https://wxs.ign.fr/9u5z4x13jqu05fb3o9cux5e1/telechargement/prepackage/RGEALTI-5M_PACK_CORSE_16-06-2021$RGEALTI_2-0_5M_ASC_LAMB93-IGN78C_D02B_2020-04-16/file/RGEALTI_2-0_5M_ASC_LAMB93-IGN78C_D02B_2020-04-16.7z
 ```
 Unzip and collect the ASC files in a folder (431 files)
 
