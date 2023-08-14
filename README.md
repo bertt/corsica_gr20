@@ -1,10 +1,16 @@
 # corsica_gr20
 
-cesium: http://bertt.github.io/corsica_gr20/cesium
+1] cesium: 
 
-procedural: http://bertt.github.io/corsica_gr20/procedural
+Processing: https://github.com/bertt/corsica_gr20/blob/main/cesium/README.md
 
-mapbox: http://bertt.github.io/corsica_gr20/mapbox
+Demo: http://bertt.github.io/corsica_gr20/cesium
+
+Deprecated:
+
+2] Procedural: http://bertt.github.io/corsica_gr20/procedural
+
+3] mapbox: http://bertt.github.io/corsica_gr20/mapbox
 
 
 
